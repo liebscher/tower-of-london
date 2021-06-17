@@ -20,8 +20,8 @@ def save():
             # print(response)
             f.write(response)
     except Exception as e:
-        abort(Response(f"Error 102: Please contact the study administrators: {e}"))
-
+        print(f"Error 100: Please contact the study administrators: {e}")
+        return {"msg": "Error 100: Please contact the study administrators: {e}"}
 
     try:
         s3 = boto3.session.Session().client("s3")
@@ -30,24 +30,29 @@ def save():
         # print(response)
         # print(response[0])
         # print(response[0]["PID"])
-        PID = [_dict["PID"] for _dict in response if "PID" in _dict][0]
+        PID = [_dict["PID"] for _dict in response if "PID" in _dict]
 
+        if len(PID) == 0:
+            raise ValueError("PROLIFIC_PID not given.")
+
+        PID = PID[0]
         if not PID:
-            raise Exception("Invalid PID")
+            raise ValueError("Empty PROLIFIC_PID.")
 
         s3.upload_file("tmp.json", BUCKET, f"{PID}.json")
-        print("uploaded")
     except ClientError as e:
-        print("error 100")
-        abort(Response(f"Error 100: Please contact the study administrators: {e}"))
+        print(f"Error 101: Please contact the study administrators: {e}")
+        return {"msg": f"Error 101: Please contact the study administrators: {e}"}
+    except ValueError as e:
+        print(f"Error 102: Please contact the study administrators: {e}")
+        return {"msg": f"Error 102: Please contact the study administrators: {e}"}
     except Exception as e:
-        print("error 101")
-        abort(Response(f"Error 101: Please contact the study administrators: {e}"))
+        print(f"Error 103: Please contact the study administrators: {e}")
+        return {"msg": f"Error 103: Please contact the study administrators: {e}"}
     finally:
-        print("delete")
         os.remove("tmp.json")
     
-    return Response("You may close this page now.")
+    return {"msg": "You may close this page now."}
 
 @application.route('/next')
 def next():

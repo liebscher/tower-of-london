@@ -1,8 +1,10 @@
-<!DOCTYPE html><html class=''>
+<!DOCTYPE html>
+<html class=''>
+
 <head>
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
-    <title>Tower of London</title>   
+    <title>Tower of London</title>
     <link rel='stylesheet' type='text/css' href='jspsych.css'>
     <link rel='stylesheet' type='text/css' href='default_style.css'>
     <link rel='stylesheet' type='text/css' href='style.css'>
@@ -24,72 +26,63 @@
 <script src='jspsych/poldrack_plugins/poldrack_utils.js'></script>
 <script src='experiment.js'></script>
 <script>
-$( document ).ready(function() {
+    $(document).ready(function () {
 
-    var parameters = {};
-    var parameter_name;
-    var parameter_value;
-    if(document.URL.includes("\?")){
-        var parameters_string = document.URL.substring(document.URL.search("\\?") + 1);
-        while(parameters_string.length > 0){
-            parameter_name = parameters_string.substring(0, parameters_string.search("="));
-            if(parameters_string.includes("&")){
-                parameter_value = parameters_string.substring(parameters_string.search("=") + 1, parameters_string.search("&"));
-                parameters_string = parameters_string.substring(parameters_string.search("&") + 1);
-            } else{
-                parameter_value = parameters_string.substring(parameters_string.search("=") + 1);
-                parameters_string = "";
+        var parameters = {};
+        var parameter_name;
+        var parameter_value;
+        if (document.URL.includes("\?")) {
+            var parameters_string = document.URL.substring(document.URL.search("\\?") + 1);
+            while (parameters_string.length > 0) {
+                parameter_name = parameters_string.substring(0, parameters_string.search("="));
+                if (parameters_string.includes("&")) {
+                    parameter_value = parameters_string.substring(parameters_string.search("=") + 1, parameters_string.search("&"));
+                    parameters_string = parameters_string.substring(parameters_string.search("&") + 1);
+                } else {
+                    parameter_value = parameters_string.substring(parameters_string.search("=") + 1);
+                    parameters_string = "";
+                };
+                parameters[parameter_name] = parameter_value;
             };
-            parameters[parameter_name] = parameter_value;
         };
-    };
 
-    console.log(parameters)
+        console.log(parameters)
 
-    jsPsych.init({
-             timeline: tower_of_london_experiment,
-             display_element: "getDisplayElement",
-             fullscreen: true,
-             on_trial_finish: function(data){
-               addID('tower-of-london')
-             },
+        jsPsych.init({
+            timeline: tower_of_london_experiment,
+            display_element: "getDisplayElement",
+            fullscreen: false,
+            on_trial_finish: function (data) {
+                addID('tower-of-london')
+            },
 
-             on_finish: function(data){
+            on_finish: function (data) {
 
-                 // Serialize the data
-                 var promise = new Promise(function(resolve, reject) {
-                     var data = jsPsych.data.getData();
-                     
-                     data.unshift(parameters)
-                     data = JSON.stringify(data)
-                     console.log(data)
-                     resolve(data);
-                 })
+                // Serialize the data
+                var promise = new Promise(function (resolve, reject) {
+                    var data = jsPsych.data.getData();
 
-                 promise.then(function(data) {
+                    data.unshift(parameters)
+                    data = JSON.stringify(data)
+                    resolve(data);
+                })
 
-                     $.ajax({
-                         type: "POST",
-                         url: '/save',
-                         data: { "data": data },
-                         success: function(){ document.location = "/next" },
-                         dataType: "application/json",
-                         // Endpoint not running, local save
-                         error: function(err) {
+                promise.then(function (data) {
 
-                             if (err.status == 200){
-                                document.location = "/next"
-                             } else {
-                                 // If error, assue local save
-                                //  jsPsych.data.localSave('tower-of-london_results.csv', 'csv');
-                            }
-                         }
+                    $.ajax({
+                        type: "POST",
+                        url: '/save',
+                        data: { "data": data },
+                        success: function (res, status, xhr) {
+                            document.write(res["msg"])
+                        },
+                        dataType: "json",
+                    });
+                })
+            }
 
-                     });
-                 })
-             }
-
-      });
-});
+        });
+    });
 </script>
+
 </html>
