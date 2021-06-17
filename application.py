@@ -52,11 +52,7 @@ def save():
     finally:
         os.remove("tmp.json")
     
-    return {"msg": "You may close this page now."}
-
-@application.route('/next')
-def next():
-    return "You may now close this page."
+    return {"msg": "You may now continue to the next page."}
 
 if __name__ == "__main__":
     application.debug = True
