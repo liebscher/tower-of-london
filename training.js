@@ -587,18 +587,30 @@ var problem_node = {
   timing_post_trial: 1000
 }
 
+var training_wrapup_block = {
+  type: 'poldrack-text',
+  data: {
+    trial_id: "training_wrapup"
+  },
+  cont_key: [13],
+  text: '<div class = centerbox><p class = center-block-text>You have finished training! You may continue to the next page in the survey now.</p></div>',
+  timing_post_trial: 0,
+  timing_response: 180000
+};
+
 /* create experiment definition array */
 var tower_of_london_experiment = [];
-// tower_of_london_experiment.push(instruction_node);
-// tower_of_london_experiment.push(practice_node);
-// tower_of_london_experiment.push(feedback_block)
-tower_of_london_experiment.push(start_test_block);
-for (var i = 0; i < problems.length; i++) {
-  tower_of_london_experiment.push(problem_node);
-  tower_of_london_experiment.push(feedback_block)
-  if (i != problems.length-1) {
-    tower_of_london_experiment.push(advance_problem_block)
-  }
-}
-// tower_of_london_experiment.push(post_task_block)
-tower_of_london_experiment.push(end_block);
+tower_of_london_experiment.push(instruction_node);
+tower_of_london_experiment.push(practice_node);
+tower_of_london_experiment.push(feedback_block);
+tower_of_london_experiment.push(training_wrapup_block);
+// tower_of_london_experiment.push(start_test_block);
+// for (var i = 0; i < problems.length; i++) {
+//   tower_of_london_experiment.push(problem_node);
+//   tower_of_london_experiment.push(feedback_block)
+//   if (i != problems.length-1) {
+//     tower_of_london_experiment.push(advance_problem_block)
+//   }
+// }
+// // tower_of_london_experiment.push(post_task_block)
+// tower_of_london_experiment.push(end_block);

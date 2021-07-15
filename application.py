@@ -8,6 +8,10 @@ BUCKET = "betterup-labs-prospection-research"
 
 application = Flask(__name__, static_url_path='', static_folder='')
 
+@application.route('/training')
+def index_training():
+    return application.send_static_file("training.html")
+
 @application.route('/')
 def index():
     return application.send_static_file("index.html")
