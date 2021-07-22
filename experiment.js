@@ -307,7 +307,7 @@ var end_block = {
     exp_id: 'tower_of_london'
   },
   timing_response: 180000,
-  text: '<div class = centerbox><p class = center-block-text>Thanks for completing this task!</p><p class = center-block-text>Press <strong>enter</strong> to continue.</p></div>',
+  text: '<div class = centerbox><p class = center-block-text>Thanks for completing this task!</p><p class = center-block-text>IMPORTANT:</p><p class = center-block-text><strong>PLEASE PRESS ENTER AND WAIT UNTIL YOU ARE TOLD YOUR DATA IS SAVED!</strong></p><p class = center-block-text>Do not continue the survey until told to, otherwise your data will not be saved and we will not compensate you.</p><p class = center-block-text>Press <strong>enter</strong> to save your data and exit fullscreen.</p></div>',
   cont_key: [13],
   timing_post_trial: 0,
   on_finish: assessPerformance

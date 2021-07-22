@@ -299,22 +299,8 @@ var post_task_block = {
    columns: [60,60]
 };
 
-/* define static blocks */
-var end_block = {
-  type: 'poldrack-text',
-  data: {
-    trial_id: "end",
-    exp_id: 'tower_of_london'
-  },
-  timing_response: 180000,
-  text: '<div class = centerbox><p class = center-block-text>Thanks for completing this task!</p><p class = center-block-text>Press <strong>enter</strong> to continue.</p></div>',
-  cont_key: [13],
-  timing_post_trial: 0,
-  on_finish: assessPerformance
-};
-
 var feedback_instruct_text =
-  'Welcome to the experiment. This experiment will take about 5 minutes. Press <strong>enter</strong> to begin.'
+  'Welcome to the experiment. This training period will take about 2 minutes. Press <strong>enter</strong> to begin.'
 var feedback_instruct_block = {
   type: 'poldrack-text',
   data: {
@@ -590,10 +576,10 @@ var problem_node = {
 var training_wrapup_block = {
   type: 'poldrack-text',
   data: {
-    trial_id: "training_wrapup"
+    trial_id: "end"
   },
   cont_key: [13],
-  text: '<div class = centerbox><p class = center-block-text>You have finished training! You may continue to the next page in the survey now.</p></div>',
+  text: '<div class = centerbox><p class = center-block-text>You have finished training! Press <strong>enter</strong> to exit fullscreen and continue to the next page in the survey now.</p></div>',
   timing_post_trial: 0,
   timing_response: 180000
 };
@@ -604,13 +590,3 @@ tower_of_london_experiment.push(instruction_node);
 tower_of_london_experiment.push(practice_node);
 tower_of_london_experiment.push(feedback_block);
 tower_of_london_experiment.push(training_wrapup_block);
-// tower_of_london_experiment.push(start_test_block);
-// for (var i = 0; i < problems.length; i++) {
-//   tower_of_london_experiment.push(problem_node);
-//   tower_of_london_experiment.push(feedback_block)
-//   if (i != problems.length-1) {
-//     tower_of_london_experiment.push(advance_problem_block)
-//   }
-// }
-// // tower_of_london_experiment.push(post_task_block)
-// tower_of_london_experiment.push(end_block);
