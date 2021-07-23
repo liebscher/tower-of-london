@@ -40,7 +40,7 @@ def save():
             raise ValueError("PROLIFIC_PID not given.")
 
         PID = PID[0]
-        if not PID:
+        if not PID or PID == "null":
             raise ValueError("Empty PROLIFIC_PID.")
 
         s3.upload_file("tmp.json", BUCKET, f"{PID}.json")
