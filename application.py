@@ -56,7 +56,7 @@ def save():
     finally:
         os.remove("tmp.json")
     
-    return {"msg": "You may now continue to the next page."}
+    return {"msg": "Your data has been saved and you continue to the next page."}
 
 if __name__ == "__main__":
     application.debug = True
